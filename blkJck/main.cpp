@@ -1,15 +1,13 @@
 /* 
  * File:   main.cpp
  * Author: Anthony Vantino
- * Created on July 14, 2015, 12:10 PM
- * Purpose: Simple Sort step by step
+ * Created on July 20, 2015, 12:10 PM
+ * Purpose: Play the game of Blackjack
  */
 
 //System Libraries
 #include <iostream>
-#include <iomanip>
 #include <cstdlib>
-#include <ctime>
 #include <limits>
 using namespace std;
 
@@ -23,7 +21,6 @@ void crtDeck(int deck[]);
 void shuffle(int deck[], int size);
 void showCrd(int card);
 void showCrd(const int deck[], int numCrds, bool hide);
-void dumpDck(int deck[], int size);
 int rndNum(int low, int high);
 int cardVal(int card);
 int getTop(int deck[]);
@@ -48,6 +45,18 @@ int main(int argc, char *argv[]) {
     return 1;
 }
 
+/*******************************************************************************
+ **************************** Play Hand ****************************************
+ *******************************************************************************
+ * Purpose: Play a hand of Blackjack (Main Game Logic)
+ * inputs:
+ *        hit -> Draw another card
+ *        stand -> End your turn
+ *        playAgn -> Play another hand of Blackjack
+ * Outputs:
+ *         Winner -> winner of the hand
+ *         Next hand -> The next hand of Blackjack
+ */
 void playHnd(){
     char play = 'N';
     do{
@@ -117,6 +126,15 @@ void playHnd(){
     while(playAgn(play));
 }
 
+/*******************************************************************************
+ **************************** Create Deck **************************************
+ *******************************************************************************
+ * Purpose: Create the deck used for blackjack
+ * inputs:
+ *   
+ * Outputs:
+ *         deck -> 52 cards
+ */
 void crtDeck(int deck[]){
     int rank = 101;
     int i = 0;
@@ -142,6 +160,15 @@ void crtDeck(int deck[]){
     }
 }
 
+/*******************************************************************************
+ **************************** Shuffle ******************************************
+ *******************************************************************************
+ * Purpose: Shuffle the deck after every hand
+ * inputs:
+ *       
+ * Outputs:
+ *         new deck -> a new deck with the same cards
+ */
 void shuffle(int deck[], int size){
     for(int i = 0; i < 500; i++){
         int t1 = 0;
@@ -156,6 +183,15 @@ void shuffle(int deck[], int size){
     }
 }
 
+/*******************************************************************************
+ **************************** Show Card ****************************************
+ *******************************************************************************
+ * Purpose: Display what the card is when in play
+ * inputs:
+ *     
+ * Outputs:
+ *         card -> Suit and rank
+ */
 void showCrd(int card){
     if(card == 0){
         cout<<"";
@@ -207,6 +243,16 @@ void showCrd(int card){
     }
 }
 
+/*******************************************************************************
+ **************************** Show Card ****************************************
+ *******************************************************************************
+ * Purpose: Show the cards dealt in the hand
+ * inputs:
+ *      
+ * Outputs:
+ *         hide -> dealer's first card (just like in real life)
+ *         Display -> The card 
+ */
 void showCrd(const int deck[], int numCrds, bool hide){
     //Hide Dealer's first card
     if(hide){
@@ -231,13 +277,15 @@ void showCrd(const int deck[], int numCrds, bool hide){
     }
 }
 
-void dumpDck(int deck[], int size){
-    //Loop through deck array
-    for(int i = 0; i < size; i++){
-        cout<<i + 1<<".) "<<deck[i]<<endl;
-    }
-}
-
+/*******************************************************************************
+ **************************** Random Number ************************************
+ *******************************************************************************
+ * Purpose: Give player a random number
+ * inputs:
+ *       
+ * Outputs:
+ *         randNum -> Random Number
+ */
 int rndNum(int low, int high){
     static bool first = true;
     int randNum;
@@ -252,6 +300,15 @@ int rndNum(int low, int high){
     return randNum;
 }
 
+/*******************************************************************************
+ **************************** Card Value ***************************************
+ *******************************************************************************
+ * Purpose: Play a hand of Blackjack
+ * inputs:
+ *       
+ * Outputs:
+ *         card -> Card value
+ */
 int cardVal(int card){
     int cardVal;
     
@@ -274,6 +331,15 @@ int cardVal(int card){
     return cardVal;
 }
 
+/*******************************************************************************
+ **************************** Get Top ******************************************
+ *******************************************************************************
+ * Purpose: Get top card of the deck 
+ * inputs:
+ *        
+ * Outputs:
+ *         topCard -> the top card in the deck of 52
+ */
 int getTop(int deck[]){
     int topCard = 0;
     //Loop through deck
@@ -288,6 +354,15 @@ int getTop(int deck[]){
     }
 }
 
+/*******************************************************************************
+ **************************** Add **********************************************
+ *******************************************************************************
+ * Purpose: Add the cards together for a total
+ * inputs:
+ *        
+ * Outputs:
+ *         hand -> your final total at the end of the hand
+ */
 void add(int hand[], int cardAdd){
     //Loop through hand
     for(int i = 0; i < 9; i++){
@@ -299,6 +374,15 @@ void add(int hand[], int cardAdd){
     }
 }
 
+/*******************************************************************************
+ **************************** Hit Stand ****************************************
+ *******************************************************************************
+ * Purpose: Make the dealer hit until he is at or above 16
+ * inputs:
+ *        
+ * Outputs:
+ *         dealHnd -> once 16 dealer stops drawing cards
+ */
 void hitStnd(int dealHnd[], int deck[], int playHnd[]){
     //Loop through Dealer hand
     for(int i = 0; i < 9; i++){
@@ -323,9 +407,18 @@ void hitStnd(int dealHnd[], int deck[], int playHnd[]){
             break;
         }
     }
-}
+  }
 }
 
+/*******************************************************************************
+ **************************** Get Hand *****************************************
+ *******************************************************************************
+ * Purpose: Get Player/Dealer hand
+ * inputs:
+ *        
+ * Outputs:
+ *         addCrd -> add card to player/dealer hand
+ */
 int getHand(const int hand[]){
     int addCrd = 0;
     //Loop through hand and add cards
@@ -335,6 +428,16 @@ int getHand(const int hand[]){
     return addCrd;
 }
 
+/*******************************************************************************
+ **************************** Play Again ***************************************
+ *******************************************************************************
+ * Purpose: Play another hand of Blackjack
+ * inputs:
+ *        play -> Yes or No
+ * Outputs:
+ *         True -> play again
+ *         False -> End game
+ */
 bool playAgn(char& play){
     //Prompt user to play again
     cout<<"\n\nWould you like to play another hand? (y/n) ";
@@ -346,12 +449,22 @@ bool playAgn(char& play){
         playHnd();
         return(true);
     }
-    //If else Exit
+    //else Exit
     else{
         return(false);
     }
 }
 
+/*******************************************************************************
+ **************************** Player Draw **************************************
+ *******************************************************************************
+ * Purpose: Ask player if they would like to hit
+ * inputs:
+ *        draw -> yes or no
+ * Outputs:
+ *         true -> give player a card
+ *         false -> End players turn begin Dealer turn
+ */
 bool playDrw(char& draw){
     //Prompt user to see if they would like to hit/stand
     cout<<"\n\nWould you like to hit or stand? (h/s) ";
@@ -367,6 +480,16 @@ bool playDrw(char& draw){
     }
 }
 
+/*******************************************************************************
+ **************************** Winner  ******************************************
+ *******************************************************************************
+ * Purpose: Calculate the winner of the round
+ * inputs:
+ *        
+ * Outputs:
+ *         playScr -> Player is the winner of the hand
+ *         dealScr -> Dealer is the winner of the hand
+ */
 void winner(const int playHnd[], const int dealHnd[]){
     int playScr = getHand(playHnd);
     int dealScr = getHand(dealHnd);
@@ -389,6 +512,15 @@ void winner(const int playHnd[], const int dealHnd[]){
     }
 }
 
+/*******************************************************************************
+ **************************** Bust  ********************************************
+ *******************************************************************************
+ * Purpose: To find out if player or dealer busted
+ * inputs:
+ *        
+ * Outputs:
+ *         playAgn -> Would you like to play again Yes or No
+ */
 void bust(const int playHnd[], const int dealHnd[], char play){
     int playScr = getHand(playHnd);
     int dealScr = getHand(dealHnd);
@@ -405,6 +537,15 @@ void bust(const int playHnd[], const int dealHnd[], char play){
     }
 }
 
+/*******************************************************************************
+ **************************** Blackjack ****************************************
+ *******************************************************************************
+ * Purpose: Determine if the dealer or player has a perfect 21
+ * inputs:
+ *        
+ * Outputs:
+ *         playAgn -> When winner is determined ask if they would like to play again
+ */
 void blckJck(const int playHnd[], const int dealHnd[], char play){
     int playScr = getHand(playHnd);
     int dealScr = getHand(dealHnd);
@@ -423,6 +564,16 @@ void blckJck(const int playHnd[], const int dealHnd[], char play){
     }
 }
 
+/*******************************************************************************
+ **************************** Score ********************************************
+ *******************************************************************************
+ * Purpose: Play a hand of Blackjack
+ * inputs:
+ *       
+ * Outputs:
+ *         playHnd -> Final score at end of round
+ *         dealHnd -> Final score at end of round
+ */
 void score(const int playHnd[], const int dealHnd[]){
     //Display Hand
     cout<<"Player Hand ";
@@ -435,6 +586,15 @@ void score(const int playHnd[], const int dealHnd[]){
     cout<<" ("<<getHand(dealHnd)<<"pts)."<<endl;
 }
 
+/*******************************************************************************
+ **************************** Soft Hard ****************************************
+ *******************************************************************************
+ * Purpose: Ask player if they would like their Ace to be a 1 or 11
+ * inputs:
+ *        sftHrd -> 1 or 11
+ * Outputs:
+ *         ace -> either 1 or 11 value
+ */
 void sftHrd(int playHnd[]){
     //Check hand
     for(int i = 0; i < 9; i++){
@@ -462,6 +622,15 @@ void sftHrd(int playHnd[]){
     }
 }
 
+/*******************************************************************************
+ **************************** Soft Hard Dealer *********************************
+ *******************************************************************************
+ * Purpose: Determine if the dealers Ace should be an 1 or 11
+ * inputs:
+ *       
+ * Outputs:
+ *         dealHnd -> Based on if the 11 or 1 would be the better choice
+ */
 void sftHrdD(int dealHnd[], int playHnd[]){
     //Check hand
     for(int i = 0; i < 9; i++){
