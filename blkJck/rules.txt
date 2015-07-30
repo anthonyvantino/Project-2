@@ -1,0 +1,24 @@
+Introduction
+
+Blackjack
+
+Game Objective
+
+Blackjack is played against the casino so the main objective is to 
+have a total hand value that exceeds the total hand value of the 
+dealer without going over a total point value of 21.
+A traditional 52 cards deck is used (or several decks) and each card has a 
+point value attached to it. Aces count as 1 or 11, Face cards 
+(King, Queen and Jack) count as 10 and all other cards keep the 
+value that is printed on them.
+
+How to Play
+
+The dealer deals each player two cards facing up. The dealer 
+also gets two cards but only one is facing up and the other 
+is facing down (known as the hole card). Players are allowed 
+to draw additional cards to the total hand value of 21.
+Once a player drew a card that takes his total hand value above 
+21 they bust out of the game. Either the dealer or player can win 
+the hand with low valued hands in situations when one or the 
+other busted out of the game.

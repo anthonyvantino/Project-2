@@ -9,6 +9,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <limits>
+#include <fstream>
+#include <string>
 using namespace std;
 
 //User Libraries
@@ -38,9 +40,25 @@ void sftHrdD(int dealHnd[], int playHnd[]);
 
 //Execution Begins here!
 int main(int argc, char *argv[]) {
+    string txt[1000];
+    string line;
+
+    int i=0;
+    ifstream rules ("rules.txt");
+    if (rules.is_open()){
+        while (!rules.eof()){
+            getline(rules,line);
+            txt[i]=line;
+            i++;
+            }
+        }
+    rules.close();
+    
+    for (int j=0; txt[j]!="\0"; j++)
+        cout << txt[j] << endl;
     //Play BlackJack
     playHnd();
-    
+   
     //Winter is Coming!
     return 1;
 }
@@ -58,9 +76,9 @@ int main(int argc, char *argv[]) {
  *         Next hand -> The next hand of Blackjack
  */
 void playHnd(){
-    char play = 'N';
+    char play = 'n';
     do{
-        char draw = 'H';
+        char draw = 'h';
         
         //Initialize and Shuffle Deck
         int deck[52];
